@@ -6,8 +6,7 @@ function LoginForm() {
   const [form, setForm] = useState({});
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
-  const useUserActions = useUserActions();
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const loginForm = event.currentTarget;
