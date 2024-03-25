@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { getUser } from '../hooks/user.actions';
 
 function ProtectedRoute({ children }) {
-  const auth = JSON.parse(localStorage.getItem('auth'));
+  const user = getUser();
   
-  // 檢查是否已登錄，使用 user 變數而不是 auth.account
-  return auth && auth.user ? <>{children}</> : <Navigate to="/login/" />;
+  return user ? <>{children}</> : <Navigate to="/login/" />;
 }
 
 export default ProtectedRoute;
