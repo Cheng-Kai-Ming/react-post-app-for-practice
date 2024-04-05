@@ -6,6 +6,7 @@ function RegistrationForm() {
   const [validated, setValidated] = useState(false);
   const [form, setForm] = useState({});
   const [error, setError] = useState(null);
+  const userActions = useUserActions();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,7 +27,7 @@ function RegistrationForm() {
       bio: form.bio,
     };
 
-    useUserActions.register(data)
+    userActions.register(data)
     .catch((err) => {
       if (err.message) {
         setError(err.request.response);

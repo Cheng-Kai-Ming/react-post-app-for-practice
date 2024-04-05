@@ -6,7 +6,8 @@ function LoginForm() {
   const [form, setForm] = useState({});
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
-  
+  const userActions = useUserActions();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const loginForm = event.currentTarget;
@@ -22,7 +23,7 @@ function LoginForm() {
       password: form.password
     }
 
-    useUserActions.login(data)
+    userActions.login(data)
       .catch((err) => {
         if (err.message) {
           setError(err.request.response);
