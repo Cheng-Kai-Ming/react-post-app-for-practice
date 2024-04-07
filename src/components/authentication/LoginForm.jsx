@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useUserActions } from '../../hooks/user.actions';
 
 function LoginForm() {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const userActions = useUserActions();

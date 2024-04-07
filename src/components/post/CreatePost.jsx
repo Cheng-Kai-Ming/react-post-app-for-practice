@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import axiosService from '../../helpers/axios';
 import { getUser } from '../../hooks/user.actions';
+import Toaster from '../Toaster';
 
 function CreatePost() {
   const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [validated, setValidated] = useState(false);
@@ -20,15 +24,21 @@ function CreatePost() {
     setValidated(true);
 
     const data = {
-      author = user.id,
-      body = form.body,
+      author: user.id,
+      body: form.body,
     }
 
-    axiosService.post('/posts/', data).then((res) => {
+    axiosService.post('/post/', data).then((res) => {
       console.log(res.data);
       handleClose();
+      setToastMessage('Post created successfully');
+      setToastType('success');
       setForm({});
-    }).catch((err) => console.log(err));
+      setShowToast(true);
+    }).catch((err) => {
+      setToastMessage('Failed to create post');
+      setToastType('danger');
+      console.log(err)});
   }
   return(
     <>
@@ -58,11 +68,17 @@ function CreatePost() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleSubmit}
-          disable={form.body === undefined}>
+          disabled={form.body === undefined || form.body === ''}>
             Post
           </Button>
         </Modal.Footer>
       </Modal>  
+      <Toaster
+        showToast={showToast}
+        title='Post'
+        message={toastMessage}
+        onClose={() => setShowToast(false)}
+        type={toastType}/>
     </>
   )
 };
